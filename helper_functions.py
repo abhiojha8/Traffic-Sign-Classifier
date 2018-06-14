@@ -54,35 +54,35 @@ def rotate(img):
     cx,cy = int(img.shape[0]/2), int(img.shape[1]/2)
     angle = 30.0*np.random.rand()-12
     M = cv2.getRotationMatrix2D((cx, cy), angle, 1.0)
-    return cv2.warpAffine(img, M, img.shape[:2]), angle
+    return cv2.warpAffine(img, M, img.shape[:2])
 
 def sharpen(img):
     gauss_blur = cv2.GaussianBlur(img, (5,5), 20.0)
     return cv2.addWeighted(img, 2, gauss_blur, -1, 0)
 
-def augmented_data(X_train):
-    """
-    This function creates 3 different arrays: 
-    X_train_rot: array of rotated images
-    X_train_scaled: array of scaled images
-    X_train_trans_sharp: array of translated and sharpened images
-    """
-    rotated_arr = []
-    scaled_arr = []
-    trans_sharp_arr = []
-    for i in range(len(X_train)):
-        rotated_img, _ = rotate(X_train[i])
-        scaled_img = scale(X_train[i])
-        trans_sharp_img = translate(sharpen(X_train[i]))
-        rotated_arr.append(rotated_img)
-        scaled_arr.append(scaled_img)
-        trans_sharp_arr.append(trans_sharp_img)
+# def augmented_data(X_train):
+#     """
+#     This function creates 3 different arrays: 
+#     X_train_rot: array of rotated images
+#     X_train_scaled: array of scaled images
+#     X_train_trans_sharp: array of translated and sharpened images
+#     """
+#     rotated_arr = []
+#     scaled_arr = []
+#     trans_sharp_arr = []
+#     for i in range(len(X_train)):
+#         rotated_img, _ = rotate(X_train[i])
+#         scaled_img = scale(X_train[i])
+#         trans_sharp_img = translate(sharpen(X_train[i]))
+#         rotated_arr.append(rotated_img)
+#         scaled_arr.append(scaled_img)
+#         trans_sharp_arr.append(trans_sharp_img)
 
-    X_train_rot = np.concatenate([arr[np.newaxis] for arr in rotated_arr])
-    X_train_scaled = np.concatenate([arr[np.newaxis] for arr in scaled_arr])
-    X_train_trans_sharp = np.concatenate([arr[np.newaxis] for arr in trans_sharp_arr])
+#     X_train_rot = np.concatenate([arr[np.newaxis] for arr in rotated_arr])
+#     X_train_scaled = np.concatenate([arr[np.newaxis] for arr in scaled_arr])
+#     X_train_trans_sharp = np.concatenate([arr[np.newaxis] for arr in trans_sharp_arr])
     
-    return X_train_rot, X_train_scaled, X_train_trans_sharp
+#     return X_train_rot, X_train_scaled, X_train_trans_sharp
 
     
     
